@@ -12,7 +12,7 @@ const Header = () => {
           src="https://www.foreach.cl/static/media/forEach-gif.157867e4.gif"
           className="logo"
         />
-        <blockquote class="blockquote text-center lead title">Banco</blockquote>
+        <blockquote className="blockquote text-center lead title">Banco</blockquote>
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
 

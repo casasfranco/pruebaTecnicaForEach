@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./bootstrap.min.css";
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { url as dataBaseUrl } from './database';
 import Footer from "./components/common/Footer";
 import Header from "./components/common/Header";
 import Home from "./components/main/Home";
@@ -10,25 +11,34 @@ import TravelAdd from "./components/travels/TravelAdd";
 
 function App() {
 
+  const [rechargeTravels, setRechargeTravels] = useState(true);
+  const [listOfTravels, setListOfTravels] = useState([]);
+
   const [listOfPersons, setListOfPersons] = useState(
     "trabajadores. Cargar lista desde DB"
   );
   const [listOfConveyance, setListOfConveyance] = useState(
     "medio de transporte. Cargar lista desde DB"
   )
-  const [productosAPI, setProductosAPI] = useState([]);
 
+  useEffect(() => {
+    if (rechargeTravels) {
+      callAPI();
+      setRechargeTravels(false);
+    }
+  }, [rechargeTravels]);
 
   const callAPI = async () => {
-    // try {
-    //   const respuesta = await fetch(
-    //     `url`
-    //   );
-    //   const resultado = await respuesta.json();
-    //   console.log(resultado);
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    try {
+      const response = await fetch(
+        dataBaseUrl
+      );
+      const result = await response.json();
+      console.log(result);
+      setListOfTravels(result);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
 
@@ -45,13 +55,10 @@ function App() {
           exact
           path="/travels"
           render={() => (
-            <div>
               <TravelsList
-              // productosAPI={productosAPI}
-              // setRecargarProductos={setRecargarProductos}
+              listOfTravels={listOfTravels}
+              setRechargeTravels={setRechargeTravels}
               ></TravelsList>
-              {/*  */}
-            </div>
           )}
         ></Route>
 

@@ -1,24 +1,38 @@
-import React from 'react';
+import React from "react";
 import ListGroup from "react-bootstrap/ListGroup";
-// import LineaProducto from "./LineaProducto";
-import TravelRow from './TravelRow'
+import Table from 'react-bootstrap/Table'
+import TravelRow from "./TravelRow";
 
-const travelsList = () => {
-    return (
+const travelsList = (props) => {
+  return (
     <section className="container my-4">
       <h1 className="display-4 text-center my-4">Lista de viajes realizados</h1>
-      <ListGroup>
-        {/* {props.productosAPI.map((product) => (
-          <LineaProducto
-            key={product._id}
-            product={product}
-            setRecargarProductos={props.setRecargarProductos}
-          ></LineaProducto>
-        ))} */}
-        <TravelRow></TravelRow>
-      </ListGroup>
+      <Table responsive bordered hover>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Dia y hora</th>
+            <th>Punto de inicio</th>
+            <th>Punto de termino</th>
+            <th>Km recorridos</th>
+            <th>Medio de transporte</th>
+            <th>Trayectoria</th>
+            <th>KgCO2 por persona</th>
+          </tr>
+        </thead>
+        <tbody>
+        {props.listOfTravels.map((travel, index) => (
+          <TravelRow
+            key={travel._id}
+            travel={travel}
+            indexTravel={index+1}
+            setRechargeTravels={props.setRechargeTravels}
+          ></TravelRow>
+        ))}
+        </tbody>
+      </Table>
     </section>
-    );
+  );
 };
 
 export default travelsList;

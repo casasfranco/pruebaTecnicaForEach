@@ -48,6 +48,7 @@ const TravelAdd = () => {
     const data = {
       typeOfTrip,
       conveyance,
+      distance,
       arrivalAddress,
       departureAddress,
       listOfPersonsSelected,
@@ -143,6 +144,7 @@ const TravelAdd = () => {
                 step="any"
                 defaultValue="1"
                 min={1}
+                onChange={(e) => setDistance(parseInt(e.target.value))}
                 name="distance"
               />
             </Form.Group>
