@@ -91,6 +91,7 @@ function App() {
           path="/travels/new"
           render={() => (
           <TravelAdd
+          setRechargeTravels={setRechargeTravels}
           listOfPersons={listOfPersons}
           listOfConveyance={listOfConveyance}
           ></TravelAdd>

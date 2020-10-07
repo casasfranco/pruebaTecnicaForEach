@@ -6,6 +6,12 @@ import Alert from "react-bootstrap/Alert";
 import Swal from "sweetalert2";
 import { withRouter } from "react-router-dom"; //Sirve para redireccionar una pag
 
+import { url as dataBaseUrl } from "../../database";
+
+import { CO2FootPrint } from '../../helper/calculate'
+// import DatePicker from "react-datepicker";
+// import "react-datepicker/dist/react-datepicker.css";
+
 const TravelAdd = (props) => {
   //States
   const [numberOfPersons, setNumberOfPersons] = useState(1);
@@ -16,6 +22,8 @@ const TravelAdd = (props) => {
   const [conveyance, setConveyance] = useState("");
   const [arrivalAddress, setArrivalAddress] = useState("");
   const [departureAddress, setDepartureAddress] = useState("");
+  const [kgCO2PerPerson, setKgCO2PerPerson] = useState("");
+  const [dateTimeTravel, setDateTimeTravel] = useState(Date.now());
 
   const [error, setError] = useState(false);
 
@@ -33,18 +41,27 @@ const TravelAdd = (props) => {
     //Validación de los campos
     if (
       numberOfPersons < 1 ||
+      listOfPersonsSelected.length < numberOfPersons ||
       arrivalAddress.trim() === "" ||
-      departureAddress.trim() === ""
+      departureAddress.trim() === "" ||
+      kgCO2PerPerson === "" ||
+      dateTimeTravel === ""
     ) {
       //mostrar un cartel de error
       setError(true);
       return;
     }
 
+    //VALIDAR QUE NO SE INGRESE EL MISMO EMPLEADO
+    //Podria simpemente preguntar si coincide algun id dentro del arreglo listOfPersonsSelected
+    //Tambien podria filtrar el arreglo cada vez que se selecciona una persona por ej:
+    //Si se seleccionó "Franco Casas" en el primer select, el proximo tendria que tener
+    //todas las opciones menos la anteriormente seleccionada
+
     setError(false);
 
-    //Agregar nuevo viaje
 
+    //Agregar nuevo viaje
     const data = {
       typeOfTrip,
       conveyance,
@@ -52,39 +69,41 @@ const TravelAdd = (props) => {
       arrivalAddress,
       departureAddress,
       listOfPersonsSelected,
+      kgCO2PerPerson: CO2FootPrint(kgCO2PerPerson, distance, typeOfTrip),
+      dateTimeTravel,
     };
 
-    // try {
-    //   const cabecera = {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify(data),
-    //   };
+    try {
+      const cabecera = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      };
 
-    //   const resultado = await fetch(
-    //     "https://backendcafeteria.herokuapp.com/api/cafeteria",
-    //     cabecera
-    //   );
-    //   console.log(resultado);
-    //   //Compruebo la respuesta
-    //   if (resultado.status === 201) {
-    //     Swal.fire(
-    //       "Producto creado",
-    //       "El producto se creo correctamente",
-    //       "success"
-    //     );
-    //   }
+      const resultado = await fetch(
+        dataBaseUrl,
+        cabecera
+      );
+      console.log(resultado);
+      //Compruebo la respuesta
+      if (resultado.status === 201) {
+        Swal.fire(
+          "Viaje creado",
+          "El viaje se creo correctamente",
+          "success"
+        );
+      }
 
-    //   //Recargar la API de produtos
-    //   props.setRecargarProductos(true);
+      //Recargar la API de produtos
+      props.setRechargeTravels(true);
 
-    //   //redirecciona
-    //   props.history.push("/productos");
-    // } catch (error) {
-    //   console.log(error);
-    // }
+      //redirecciona
+      props.history.push("/travels");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -127,9 +146,10 @@ const TravelAdd = (props) => {
                   as="select"
                   onChange={(e) => setTypeOfTrip(e.target.value)}
                 >
-                  <option>Ida</option>
-                  <option>Vuelta</option>
-                  <option>Ida y vuelta</option>
+                  <option value="0">Seleccio...</option>
+                  <option value="1">Ida</option>
+                  <option value="1">Vuelta</option>
+                  <option value="2">Ida y vuelta</option>
                 </Form.Control>
               </Form.Group>
             </div>
@@ -141,9 +161,9 @@ const TravelAdd = (props) => {
                   type="number"
                   placeholder="20"
                   step="any"
-                  defaultValue="1"
+                  defaultValue="0"
                   min={1}
-                  onChange={(e) => setDistance(parseInt(e.target.value))}
+                  onChange={(e) => setDistance(parseFloat(e.target.value))}
                   name="distance"
                 />
               </Form.Group>
@@ -156,12 +176,23 @@ const TravelAdd = (props) => {
                 </Form.Label>
                 <Form.Control
                   as="select"
-                  defaultValue="valor por defecto, buscar por props"
-                  onChange={(e) => setConveyance(e.target.value)}
+                  onChange={(e) => {
+                    //Guardo el medio de transporte (objeto completo) que coincida con el value y el id
+
+                    setConveyance(
+                      Array.from(props.listOfConveyance).find((value) => {
+                        if (e.target.value === value._id) {
+                          setKgCO2PerPerson(value.fECO2);
+                        }
+                        return e.target.value === value._id;
+                      })
+                    );
+                  }}
                 >
-                  {Array.from(props.listOfConveyance).map((conveyance) => (
-                    <option key={conveyance._id} value={conveyance.fECO2}>
-                      {conveyance.name}
+                  <option>Seleccione una opc...</option>
+                  {Array.from(props.listOfConveyance).map((aux) => (
+                    <option key={aux._id} value={aux._id}>
+                      {aux.name}
                     </option>
                   ))}
                 </Form.Control>
@@ -199,6 +230,11 @@ const TravelAdd = (props) => {
           </div>
           {
             <div className="row mb-2 justify-content-between align-items-center">
+              {/* <DatePicker
+                selected={dateTimeTravel}
+                onChange={(e) => setDateTimeTravel(e.target.value)}
+              /> */}
+
               {[...Array(numberOfPersons)].map((x, i) => {
                 return (
                   <div className="col-sm-12" key={i}>
@@ -206,9 +242,24 @@ const TravelAdd = (props) => {
                       <Form.Label className="text-muted w-75">
                         Seleccione un empleado
                       </Form.Label>
-                      <Form.Control as="select" className="w-75">
+                      <Form.Control
+                        as="select"
+                        className="w-75"
+                        onChange={
+                          (e) => {
+                            let array = listOfPersonsSelected;
+                            array.push(e.target.value);
+                            console.log(array);
+                            setListOfPersonsSelected(array);
+                            console.log(listOfPersonsSelected);
+                          }
+
+                          // setListOfPersonsSelected()
+                        }
+                      >
+                        <option>Seleccione una opc...</option>
                         {Array.from(props.listOfPersons).map((person) => (
-                          <option key={person._id}>
+                          <option key={person._id} value={person._id}>
                             {person.name + " " + person.lastName}
                           </option>
                         ))}
