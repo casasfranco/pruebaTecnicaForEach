@@ -6,7 +6,7 @@ import Alert from "react-bootstrap/Alert";
 import Swal from "sweetalert2";
 import { withRouter } from "react-router-dom"; //Sirve para redireccionar una pag
 
-const TravelAdd = () => {
+const TravelAdd = (props) => {
   //States
   const [numberOfPersons, setNumberOfPersons] = useState(1);
 
@@ -90,143 +90,142 @@ const TravelAdd = () => {
   return (
     <Fragment>
       <div className="jumbotron">
-        <h1 className="display-4 font-weight-lighter text-center">Agregar nuevo viaje</h1>
-        </div>
-    
-    <Container className="d-flex justify-content-center">
-      <Form className="w-75 mb-5" onSubmit={handleSubmit}>
+        <h1 className="display-4 font-weight-lighter text-center">
+          Agregar nuevo viaje
+        </h1>
+      </div>
 
-      <h1 className="display-4 font-weight-light text-center">Agregar nuevo viaje</h1>
+      <Container className="d-flex justify-content-center">
+        <Form className="w-75 mb-5" onSubmit={handleSubmit}>
+          {error ? (
+            <Alert variant={"danger"}>
+              Ops!! Todos los campos son obligatorios.
+            </Alert>
+          ) : null}
 
-        {error ? (
-          <Alert variant={"danger"}>
-            Ops!! Todos los campos son obligatorios.
-          </Alert>
-        ) : null}
+          <div className="row mt-3 mb-2 justify-content-between align-items-center">
+            <div className="col-sm-12 col-md-2">
+              <Form.Group controlId="formBasicPassword">
+                <Form.Label className="text-muted">Nº pasajeros</Form.Label>
+                <Form.Control
+                  type="number"
+                  placeholder="2"
+                  onChange={checkNumberOfPersons}
+                  defaultValue="1"
+                  min={1}
+                  name="numberOfPersons"
+                />
+              </Form.Group>
+            </div>
 
-        <div className="row mt-5 mb-2 justify-content-between align-items-center">
-          <div className="col-sm-12 col-md-2">
-            <Form.Group controlId="formBasicPassword">
-              <Form.Label className="text-muted">Nº pasajeros</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="2"
-                onChange={checkNumberOfPersons}
-                defaultValue="1"
-                min={1}
-                name="numberOfPersons"
-              />
-            </Form.Group>
+            <div className="col-sm-12 col-md-3">
+              <Form.Group controlId="exampleForm.ControlSelect1">
+                <Form.Label className="text-muted">
+                  Seleccione un trayecto
+                </Form.Label>
+                <Form.Control
+                  as="select"
+                  onChange={(e) => setTypeOfTrip(e.target.value)}
+                >
+                  <option>Ida</option>
+                  <option>Vuelta</option>
+                  <option>Ida y vuelta</option>
+                </Form.Control>
+              </Form.Group>
+            </div>
+
+            <div className="col-sm-12 col-md-2">
+              <Form.Group controlId="formBasicPassword">
+                <Form.Label className="text-muted">Distancia (km)</Form.Label>
+                <Form.Control
+                  type="number"
+                  placeholder="20"
+                  step="any"
+                  defaultValue="1"
+                  min={1}
+                  onChange={(e) => setDistance(parseInt(e.target.value))}
+                  name="distance"
+                />
+              </Form.Group>
+            </div>
+
+            <div className="col-sm-12 col-md-5">
+              <Form.Group controlId="exampleForm.ControlSelect1">
+                <Form.Label className="text-muted">
+                  Seleccione un transporte
+                </Form.Label>
+                <Form.Control
+                  as="select"
+                  defaultValue="valor por defecto, buscar por props"
+                  onChange={(e) => setConveyance(e.target.value)}
+                >
+                  {Array.from(props.listOfConveyance).map((conveyance) => (
+                    <option key={conveyance._id} value={conveyance.fECO2}>
+                      {conveyance.name}
+                    </option>
+                  ))}
+                </Form.Control>
+              </Form.Group>
+            </div>
           </div>
 
-          <div className="col-sm-12 col-md-3">
-            <Form.Group controlId="exampleForm.ControlSelect1">
-              <Form.Label className="text-muted">
-                Seleccione un trayecto
-              </Form.Label>
-              <Form.Control
-                as="select"
-                onChange={(e) => setTypeOfTrip(e.target.value)}
-              >
-                <option>Ida</option>
-                <option>Vuelta</option>
-                <option>Ida y vuelta</option>
-              </Form.Control>
-            </Form.Group>
-          </div>
-
-          <div className="col-sm-12 col-md-2">
-          <Form.Group controlId="formBasicPassword">
-              <Form.Label className="text-muted">Distancia (km)</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="20"
-                step="any"
-                defaultValue="1"
-                min={1}
-                onChange={(e) => setDistance(parseInt(e.target.value))}
-                name="distance"
-              />
-            </Form.Group>
-          </div>
-
-          <div className="col-sm-12 col-md-5">
-            <Form.Group controlId="exampleForm.ControlSelect1">
-              <Form.Label className="text-muted">
-                Seleccione un transporte
-              </Form.Label>
-              <Form.Control
-                as="select"
-                defaultValue="valor por defecto, buscar por props"
-                onChange={(e) => setConveyance(e.target.value)}
-              >
-                <option>Metro (Tren, Subway, Subterráneo)</option>
-                <option>Auto (Gasolina)</option>
-                <option>Camioneta (Diésel)</option>
-                <option>Motocicleta (Gasolina)</option>
-                <option>Bus Transantiago (Transporte público)</option>
-              </Form.Control>
-            </Form.Group>
-          </div>
-        </div>
-
-        <div className="row mb-2 justify-content-between align-items-center">
-          <div className="col-sm-12 col-md-6">
-            <Form.Group controlId="formBasicPassword">
-              <Form.Label className="text-muted">
-                Dirección del punto de partida:
-              </Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Ej: La niña 3175, Las Condes"
-                name="departureAddressInput"
-                onChange={(e) => setDepartureAddress(e.target.value)}
-              />
-            </Form.Group>
-          </div>
-          <div className="col-sm-12 col-md-6">
-            <Form.Group controlId="formBasicPassword">
-              <Form.Label className="text-muted">
-                Dirección del punto de termino:
-              </Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Ej: Av. Andrés Bello 2425, Providencia"
-                name="arrivalAddressInput"
-                onChange={(e) => setArrivalAddress(e.target.value)}
-              />
-            </Form.Group>
-          </div>
-        </div>
-        {
           <div className="row mb-2 justify-content-between align-items-center">
-            {[...Array(numberOfPersons)].map((x, i) => {
-              return (
-                <div className="col-sm-12" key={i}>
-                  <Form.Group controlId="exampleForm.ControlSelect1">
-                    <Form.Label className="text-muted w-75">
-                      Seleccione un empleado
-                    </Form.Label>
-                    <Form.Control as="select" className="w-75">
-                      <option>Franco Casas</option>
-                      <option>José Casas</option>
-                      <option>Pepito Fulano</option>
-                      <option>Fulano Mengano</option>
-                      <option>Usuario Prueba</option>
-                    </Form.Control>
-                  </Form.Group>
-                </div>
-              );
-            })}
+            <div className="col-sm-12 col-md-6">
+              <Form.Group controlId="formBasicPassword">
+                <Form.Label className="text-muted">
+                  Dirección del punto de partida:
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Ej: La niña 3175, Las Condes"
+                  name="departureAddressInput"
+                  onChange={(e) => setDepartureAddress(e.target.value)}
+                />
+              </Form.Group>
+            </div>
+            <div className="col-sm-12 col-md-6">
+              <Form.Group controlId="formBasicPassword">
+                <Form.Label className="text-muted">
+                  Dirección del punto de termino:
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Ej: Av. Andrés Bello 2425, Providencia"
+                  name="arrivalAddressInput"
+                  onChange={(e) => setArrivalAddress(e.target.value)}
+                />
+              </Form.Group>
+            </div>
           </div>
-        }
-        <div className="row justify-content-center">
-          <Button variant="primary" type="submit" className="w-75 mt-4">
-            Agregar
-          </Button>
-        </div>
-      </Form>
-    </Container>
+          {
+            <div className="row mb-2 justify-content-between align-items-center">
+              {[...Array(numberOfPersons)].map((x, i) => {
+                return (
+                  <div className="col-sm-12" key={i}>
+                    <Form.Group controlId="exampleForm.ControlSelect1">
+                      <Form.Label className="text-muted w-75">
+                        Seleccione un empleado
+                      </Form.Label>
+                      <Form.Control as="select" className="w-75">
+                        {Array.from(props.listOfPersons).map((person) => (
+                          <option key={person._id}>
+                            {person.name + " " + person.lastName}
+                          </option>
+                        ))}
+                      </Form.Control>
+                    </Form.Group>
+                  </div>
+                );
+              })}
+            </div>
+          }
+          <div className="row justify-content-center">
+            <Button variant="primary" type="submit" className="w-75 mt-4">
+              Agregar
+            </Button>
+          </div>
+        </Form>
+      </Container>
     </Fragment>
   );
 };

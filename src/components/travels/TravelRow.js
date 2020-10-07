@@ -54,7 +54,7 @@ const TravelRow = (props) => {
       }
     });
   };
-  let numberOfPersons = props.travel.listOfPersonsSelected
+  console.log("Valor obtenido: " + props.travel.listOfPersonsSelected);
   return (
     <Fragment>
       <tr>
@@ -64,49 +64,11 @@ const TravelRow = (props) => {
         <td className="align-middle">{props.travel.arrivalAddress}</td>
         <td className="align-middle">{props.travel.distance}</td>
         <td className="align-middle">{props.travel.conveyance}</td>
-        <td className="align-middle">{numberOfPersons}</td>
+        <td className="align-middle">{props.travel.listOfPersonsSelected.length}</td>
         <td className="align-middle">{props.travel.typeOfTrip}</td>
         <td className="align-middle">{props.travel.kgCO2PerPerson}</td>
       </tr>
     </Fragment>
-    //   <ListGroup.Iconveyancetem className="d-flex justify-content-between">
-    //     <p>
-    //       {props.}
-    //       <span className="ml-1">$ 1234215</span>
-    //     </p>
-    //     <div>
-    //       <Link
-    //         className="btn btn-warning"
-    //       //   to={`/productos/editar/${props.product._id}`}
-    //       >
-    //         <FontAwesomeIcon icon={faEdit} />
-    //       </Link>
-    //       <Button
-    //         variant="danger"
-    //       //   onClick={() => eliminarProducto(props.product._id)}
-    //       >
-    //         <FontAwesomeIcon icon={faTrash} />
-    //       </Button>
-    //     </div>
-    //     {/* <p>
-    //       {props.product.nombreProd}
-    //       <span className="ml-1">$ {props.product.precioProd}</span>
-    //     </p>
-    //     <div>
-    //       <Link
-    //         className="btn btn-warning"
-    //         to={`/productos/editar/${props.product._id}`}
-    //       >
-    //         <FontAwesomeIcon icon={faEdit} />
-    //       </Link>
-    //       <Button
-    //         variant="danger"
-    //         onClick={() => eliminarProducto(props.product._id)}
-    //       >
-    //         <FontAwesomeIcon icon={faTrash} />
-    //       </Button>
-    //     </div> */}
-    //   </ListGroup.Item>
   );
 };
 

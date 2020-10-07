@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./bootstrap.min.css";
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { url as dataBaseUrl } from './database';
+import { url as dataBaseUrl } from "./database";
 import Footer from "./components/common/Footer";
 import Header from "./components/common/Header";
 import Home from "./components/main/Home";
@@ -10,29 +10,34 @@ import TravelsList from "./components/travels/TravelsList";
 import TravelAdd from "./components/travels/TravelAdd";
 
 function App() {
-
   const [rechargeTravels, setRechargeTravels] = useState(true);
   const [listOfTravels, setListOfTravels] = useState([]);
 
+  const [
+    rechargePersonsAndConveyance,
+    setRechargePersonsAndConveyance,
+  ] = useState(true);
   const [listOfPersons, setListOfPersons] = useState(
     "trabajadores. Cargar lista desde DB"
   );
   const [listOfConveyance, setListOfConveyance] = useState(
     "medio de transporte. Cargar lista desde DB"
-  )
+  );
 
   useEffect(() => {
     if (rechargeTravels) {
       callAPI();
       setRechargeTravels(false);
     }
-  }, [rechargeTravels]);
+    if (rechargePersonsAndConveyance) {
+      getPersonsAndConveyanceAPI();
+      setRechargePersonsAndConveyance(false);
+    }
+  }, [rechargeTravels, rechargePersonsAndConveyance]);
 
   const callAPI = async () => {
     try {
-      const response = await fetch(
-        dataBaseUrl
-      );
+      const response = await fetch(dataBaseUrl);
       const result = await response.json();
       console.log(result);
       setListOfTravels(result);
@@ -41,6 +46,25 @@ function App() {
     }
   };
 
+  const getPersonsAndConveyanceAPI = async () => {
+    try {
+      const response = await fetch(dataBaseUrl + "person/");
+      const result = await response.json();
+      console.log(result);
+      setListOfPersons(result);
+    } catch (error) {
+      console.log(error);
+    }
+
+    try {
+      const response = await fetch(dataBaseUrl + "conveyance/");
+      const result = await response.json();
+      console.log(result);
+      setListOfConveyance(result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Router>
@@ -55,19 +79,23 @@ function App() {
           exact
           path="/travels"
           render={() => (
-              <TravelsList
+            <TravelsList
               listOfTravels={listOfTravels}
               setRechargeTravels={setRechargeTravels}
-              ></TravelsList>
+            ></TravelsList>
           )}
         ></Route>
 
-        <Route exact path="/travels/new">
-          <TravelAdd 
-          // setRecargarProductos={setRecargarProductos}
-          >
-          </TravelAdd>
-        </Route>
+        <Route
+          exact
+          path="/travels/new"
+          render={() => (
+          <TravelAdd
+          listOfPersons={listOfPersons}
+          listOfConveyance={listOfConveyance}
+          ></TravelAdd>
+          )}
+        ></Route>
       </Switch>
       {/* Componentes que deben cargar en la parte inferior */}
       <Footer></Footer>

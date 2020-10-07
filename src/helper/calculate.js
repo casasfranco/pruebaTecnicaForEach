@@ -1,0 +1,1 @@
+//Aqui hago los calculos necesarios para determinar la huella de carbono 
