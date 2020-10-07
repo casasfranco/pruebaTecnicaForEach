@@ -7,17 +7,18 @@ const travelsList = (props) => {
   return (
     <section className="container my-4">
       <h1 className="display-4 text-center my-4">Lista de viajes realizados</h1>
-      <Table responsive bordered hover>
+      <Table responsive bordered hover >
         <thead>
-          <tr>
-            <th>#</th>
-            <th>Dia y hora</th>
-            <th>Punto de inicio</th>
-            <th>Punto de termino</th>
-            <th>Km recorridos</th>
-            <th>Medio de transporte</th>
-            <th>Trayectoria</th>
-            <th>KgCO2 por persona</th>
+          <tr className="table-info">
+            <th className="align-middle">#</th>
+            <th className="align-middle">Dia y hora</th>
+            <th className="align-middle">Punto de inicio</th>
+            <th className="align-middle">Punto de termino</th>
+            <th className="align-middle">Km recorridos</th>
+            <th className="align-middle">Medio de transporte</th>
+            <th className="align-middle">Nº de viajeros</th>
+            <th className="align-middle">Trayectoria</th>
+            <th className="align-middle">KgCO2 por persona</th>
           </tr>
         </thead>
         <tbody>

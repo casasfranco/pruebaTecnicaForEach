@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 
 const TravelRow = (props) => {
+  //Cree esta funcion para eliminar un viaje en caso de ser necesario. (no la utilizo en un principio)
   const deleteTravel = (id) => {
     console.log(id);
 
@@ -53,21 +54,22 @@ const TravelRow = (props) => {
       }
     });
   };
-
+  let numberOfPersons = props.travel.listOfPersonsSelected
   return (
     <Fragment>
       <tr>
-        <td>{props.indexTravel}</td>
-        {/* <td>{props.travel.}</td> */}
-        <td>Otto</td>
-        <td>@mdo</td>
-        <td>@mdo</td>
-        <td>@mdo</td>
-        <td>@mdo</td>
-        <td>@mdo</td>
+        <td className="align-middle">{props.indexTravel}</td>
+        <td className="align-middle">{props.travel.dateTimeTravel}</td>
+        <td className="align-middle">{props.travel.departureAddress}</td>
+        <td className="align-middle">{props.travel.arrivalAddress}</td>
+        <td className="align-middle">{props.travel.distance}</td>
+        <td className="align-middle">{props.travel.conveyance}</td>
+        <td className="align-middle">{numberOfPersons}</td>
+        <td className="align-middle">{props.travel.typeOfTrip}</td>
+        <td className="align-middle">{props.travel.kgCO2PerPerson}</td>
       </tr>
-      </Fragment>
-    //   <ListGroup.Item className="d-flex justify-content-between">
+    </Fragment>
+    //   <ListGroup.Iconveyancetem className="d-flex justify-content-between">
     //     <p>
     //       {props.}
     //       <span className="ml-1">$ 1234215</span>
