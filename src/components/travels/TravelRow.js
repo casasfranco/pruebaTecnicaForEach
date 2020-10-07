@@ -11,7 +11,42 @@ import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 const TravelRow = (props) => {
   return (
     <ListGroup.Item className="d-flex justify-content-between">
-      
+      <p>
+        Nombre prod
+        <span className="ml-1">$ 1234215</span>
+      </p>
+      <div>
+        <Link
+          className="btn btn-warning"
+        //   to={`/productos/editar/${props.product._id}`}
+        >
+          <FontAwesomeIcon icon={faEdit} />
+        </Link>
+        <Button
+          variant="danger"
+        //   onClick={() => eliminarProducto(props.product._id)}
+        >
+          <FontAwesomeIcon icon={faTrash} />
+        </Button>
+      </div>
+      {/* <p>
+        {props.product.nombreProd}
+        <span className="ml-1">$ {props.product.precioProd}</span>
+      </p>
+      <div>
+        <Link
+          className="btn btn-warning"
+          to={`/productos/editar/${props.product._id}`}
+        >
+          <FontAwesomeIcon icon={faEdit} />
+        </Link>
+        <Button
+          variant="danger"
+          onClick={() => eliminarProducto(props.product._id)}
+        >
+          <FontAwesomeIcon icon={faTrash} />
+        </Button>
+      </div> */}
     </ListGroup.Item>
   );
 };

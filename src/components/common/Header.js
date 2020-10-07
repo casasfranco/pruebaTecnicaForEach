@@ -16,7 +16,7 @@ const Header = () => {
           <NavLink exact={true} to="/travels" className="nav-link">
             Viajes registrados
           </NavLink>
-          <NavLink exact={true} to="/productos/nuevo" className="nav-link">
+          <NavLink exact={true} to="/travels/new" className="nav-link">
             Agregar viaje
           </NavLink>
         </Nav>
