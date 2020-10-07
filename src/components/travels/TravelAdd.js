@@ -12,6 +12,7 @@ const TravelAdd = () => {
 
   const [listOfPersonsSelected, setListOfPersonsSelected] = useState([]);
   const [typeOfTrip, setTypeOfTrip] = useState("");
+  const [distance, setDistance] = useState(0);
   const [conveyance, setConveyance] = useState("");
   const [arrivalAddress, setArrivalAddress] = useState("");
   const [departureAddress, setDepartureAddress] = useState("");
@@ -86,9 +87,15 @@ const TravelAdd = () => {
   };
 
   return (
+    <Fragment>
+      <div className="jumbotron">
+        <h1 className="display-4 font-weight-lighter text-center">Agregar nuevo viaje</h1>
+        </div>
+    
     <Container className="d-flex justify-content-center">
       <Form className="w-75 mb-5" onSubmit={handleSubmit}>
-        <h1 className="display-4 text-center my-5">Agregar nuevo viaje</h1>
+
+      <h1 className="display-4 font-weight-light text-center">Agregar nuevo viaje</h1>
 
         {error ? (
           <Alert variant={"danger"}>
@@ -127,10 +134,24 @@ const TravelAdd = () => {
             </Form.Group>
           </div>
 
+          <div className="col-sm-12 col-md-2">
+          <Form.Group controlId="formBasicPassword">
+              <Form.Label className="text-muted">Distancia (km)</Form.Label>
+              <Form.Control
+                type="number"
+                placeholder="20"
+                step="any"
+                defaultValue="1"
+                min={1}
+                name="distance"
+              />
+            </Form.Group>
+          </div>
+
           <div className="col-sm-12 col-md-5">
             <Form.Group controlId="exampleForm.ControlSelect1">
               <Form.Label className="text-muted">
-                Seleccione un medio de transporte
+                Seleccione un transporte
               </Form.Label>
               <Form.Control
                 as="select"
@@ -204,6 +225,7 @@ const TravelAdd = () => {
         </div>
       </Form>
     </Container>
+    </Fragment>
   );
 };
 

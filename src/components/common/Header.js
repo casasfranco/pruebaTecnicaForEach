@@ -2,22 +2,30 @@ import React from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import { NavLink } from "react-router-dom";
+import Image from "react-bootstrap/Image";
 
 const Header = () => {
   return (
-    <Navbar bg="info" expand="lg" variant="dark">
-      <Navbar.Brand href="#home">Banco forEach</Navbar.Brand>
+    <Navbar bg="light border-0" expand="lg" variant="light">
+      <Navbar.Brand href="#home" className="pl-3">
+        <Image
+          src="https://www.foreach.cl/static/media/forEach-gif.157867e4.gif"
+          className="logo"
+        />
+        <blockquote class="blockquote text-center lead title">Banco</blockquote>
+      </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
+
       <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="mr-auto">
+        <Nav className="container justify-content-center">
           <NavLink exact={true} to="/" className="nav-link">
-            Inicio
+            <h5 className="lead mx-5">Inicio</h5>
           </NavLink>
           <NavLink exact={true} to="/travels" className="nav-link">
-            Viajes registrados
+            <h5 className="lead mx-5">Viajes registrados</h5>
           </NavLink>
           <NavLink exact={true} to="/travels/new" className="nav-link">
-            Agregar viaje
+            <h5 className="lead mx-5">Agregar viaje</h5>
           </NavLink>
         </Nav>
       </Navbar.Collapse>
