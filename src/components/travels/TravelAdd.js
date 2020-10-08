@@ -89,11 +89,11 @@ const TravelAdd = (props) => {
 
       const resultado = await fetch(dataBaseUrl, cabecera);
       //Compruebo la respuesta
-      if (resultado.status === 201) {
+      if (resultado.status === 200) {
         Swal.fire("Viaje creado", "El viaje se creo correctamente", "success");
       }
 
-      //Recargar la API de produtos
+      //Recargar la API de viajes
       props.setRechargeTravels(true);
 
       //redirecciona
@@ -171,7 +171,6 @@ const TravelAdd = (props) => {
                   as="select"
                   onChange={(e) => {
                     //Guardo el medio de transporte (objeto completo) que coincida con el value y el id
-
                     setConveyance(
                       Array.from(props.listOfConveyance).find((value) => {
                         if (e.target.value === value._id) {
@@ -244,8 +243,6 @@ const TravelAdd = (props) => {
                             array.push(e.target.value);
                             setListOfPersonsSelected(array);
                           }
-
-                          // setListOfPersonsSelected()
                         }
                       >
                         <option>Seleccione una opc...</option>
