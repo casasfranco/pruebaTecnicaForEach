@@ -17,29 +17,26 @@ function App() {
     rechargePersonsAndConveyance,
     setRechargePersonsAndConveyance,
   ] = useState(true);
-  const [listOfPersons, setListOfPersons] = useState(
-    "trabajadores. Cargar lista desde DB"
-  );
-  const [listOfConveyance, setListOfConveyance] = useState(
-    "medio de transporte. Cargar lista desde DB"
-  );
+  const [listOfPersons, setListOfPersons] = useState("");
+  const [listOfConveyance, setListOfConveyance] = useState("");
 
   useEffect(() => {
     if (rechargeTravels) {
       callAPI();
       setRechargeTravels(false);
     }
+    //La condicion que se encuentra debajo forma parte del problema que renderiza 2 veces extras al path tralvels/
     if (rechargePersonsAndConveyance) {
       getPersonsAndConveyanceAPI();
       setRechargePersonsAndConveyance(false);
     }
   }, [rechargeTravels, rechargePersonsAndConveyance]);
 
+
   const callAPI = async () => {
     try {
       const response = await fetch(dataBaseUrl);
       const result = await response.json();
-      console.log(result);
       setListOfTravels(result);
     } catch (error) {
       console.log(error);
@@ -50,7 +47,6 @@ function App() {
     try {
       const response = await fetch(dataBaseUrl + "person/");
       const result = await response.json();
-      console.log(result);
       setListOfPersons(result);
     } catch (error) {
       console.log(error);
@@ -59,7 +55,6 @@ function App() {
     try {
       const response = await fetch(dataBaseUrl + "conveyance/");
       const result = await response.json();
-      console.log(result);
       setListOfConveyance(result);
     } catch (error) {
       console.log(error);
@@ -78,7 +73,7 @@ function App() {
         <Route
           exact
           path="/travels"
-          render={() => (
+          render={ () => (
             <TravelsList
               listOfTravels={listOfTravels}
               setRechargeTravels={setRechargeTravels}

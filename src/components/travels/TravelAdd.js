@@ -8,7 +8,7 @@ import { withRouter } from "react-router-dom"; //Sirve para redireccionar una pa
 
 import { url as dataBaseUrl } from "../../database";
 
-import { CO2FootPrint } from '../../helper/calculate'
+import { CO2FootPrint } from "../../helper/calculate";
 // import DatePicker from "react-datepicker";
 // import "react-datepicker/dist/react-datepicker.css";
 
@@ -17,13 +17,13 @@ const TravelAdd = (props) => {
   const [numberOfPersons, setNumberOfPersons] = useState(1);
 
   const [listOfPersonsSelected, setListOfPersonsSelected] = useState([]);
-  const [typeOfTrip, setTypeOfTrip] = useState("");
+  const [typeOfTrip, setTypeOfTrip] = useState(false);
   const [distance, setDistance] = useState(0);
   const [conveyance, setConveyance] = useState("");
   const [arrivalAddress, setArrivalAddress] = useState("");
   const [departureAddress, setDepartureAddress] = useState("");
   const [kgCO2PerPerson, setKgCO2PerPerson] = useState("");
-  const [dateTimeTravel, setDateTimeTravel] = useState(Date.now());
+  const [dateTimeTravel, setDateTimeTravel] = useState(Date.now().toLocaleString());
 
   const [error, setError] = useState(false);
 
@@ -62,6 +62,11 @@ const TravelAdd = (props) => {
 
 
     //Agregar nuevo viaje
+    let trip = 1; ///Auxiliar para multiplicar por defecto en 1
+    if(!typeOfTrip) {
+      trip = 2;
+    }
+
     const data = {
       typeOfTrip,
       conveyance,
@@ -69,7 +74,7 @@ const TravelAdd = (props) => {
       arrivalAddress,
       departureAddress,
       listOfPersonsSelected,
-      kgCO2PerPerson: CO2FootPrint(kgCO2PerPerson, distance, typeOfTrip),
+      kgCO2PerPerson: CO2FootPrint(kgCO2PerPerson, distance, trip),
       dateTimeTravel,
     };
 
@@ -82,18 +87,10 @@ const TravelAdd = (props) => {
         body: JSON.stringify(data),
       };
 
-      const resultado = await fetch(
-        dataBaseUrl,
-        cabecera
-      );
-      console.log(resultado);
+      const resultado = await fetch(dataBaseUrl, cabecera);
       //Compruebo la respuesta
       if (resultado.status === 201) {
-        Swal.fire(
-          "Viaje creado",
-          "El viaje se creo correctamente",
-          "success"
-        );
+        Swal.fire("Viaje creado", "El viaje se creo correctamente", "success");
       }
 
       //Recargar la API de produtos
@@ -123,7 +120,20 @@ const TravelAdd = (props) => {
           ) : null}
 
           <div className="row mt-3 mb-2 justify-content-between align-items-center">
-            <div className="col-sm-12 col-md-2">
+            <div className="col-sm-12 col-md-3">
+              <Form.Group controlId="formBasicCheckbox" className="mt-4">
+                <Form.Check
+                  type="checkbox"
+                  label="Solo ida?"
+                  onChange={(e) => {
+                    setTypeOfTrip(e.target.checked);
+                  }}
+                />
+              </Form.Group>
+            </div>
+          </div>
+          <div className="row mt-3 mb-2 justify-content-between align-items-center">
+            <div className="col-sm-12 col-md-3">
               <Form.Group controlId="formBasicPassword">
                 <Form.Label className="text-muted">Nº pasajeros</Form.Label>
                 <Form.Control
@@ -138,23 +148,6 @@ const TravelAdd = (props) => {
             </div>
 
             <div className="col-sm-12 col-md-3">
-              <Form.Group controlId="exampleForm.ControlSelect1">
-                <Form.Label className="text-muted">
-                  Seleccione un trayecto
-                </Form.Label>
-                <Form.Control
-                  as="select"
-                  onChange={(e) => setTypeOfTrip(e.target.value)}
-                >
-                  <option value="0">Seleccio...</option>
-                  <option value="1">Ida</option>
-                  <option value="1">Vuelta</option>
-                  <option value="2">Ida y vuelta</option>
-                </Form.Control>
-              </Form.Group>
-            </div>
-
-            <div className="col-sm-12 col-md-2">
               <Form.Group controlId="formBasicPassword">
                 <Form.Label className="text-muted">Distancia (km)</Form.Label>
                 <Form.Control
@@ -169,7 +162,7 @@ const TravelAdd = (props) => {
               </Form.Group>
             </div>
 
-            <div className="col-sm-12 col-md-5">
+            <div className="col-sm-12 col-md-6">
               <Form.Group controlId="exampleForm.ControlSelect1">
                 <Form.Label className="text-muted">
                   Seleccione un transporte
@@ -249,9 +242,7 @@ const TravelAdd = (props) => {
                           (e) => {
                             let array = listOfPersonsSelected;
                             array.push(e.target.value);
-                            console.log(array);
                             setListOfPersonsSelected(array);
-                            console.log(listOfPersonsSelected);
                           }
 
                           // setListOfPersonsSelected()
@@ -271,8 +262,8 @@ const TravelAdd = (props) => {
             </div>
           }
           <div className="row justify-content-center">
-            <Button variant="primary" type="submit" className="w-75 mt-4">
-              Agregar
+            <Button variant="success" type="submit" className="w-50 mt-4 ">
+              <h5 className="font-weight-light">Agregar</h5>
             </Button>
           </div>
         </Form>

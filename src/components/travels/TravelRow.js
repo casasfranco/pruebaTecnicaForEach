@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 
 const TravelRow = (props) => {
+  
   //Cree esta funcion para eliminar un viaje en caso de ser necesario. (no la utilizo en un principio)
   const deleteTravel = (id) => {
     console.log(id);
@@ -54,7 +55,6 @@ const TravelRow = (props) => {
       }
     });
   };
-  console.log("Valor obtenido: " + props.travel.listOfPersonsSelected);
   return (
     <Fragment>
       <tr>
@@ -63,9 +63,18 @@ const TravelRow = (props) => {
         <td className="align-middle">{props.travel.departureAddress}</td>
         <td className="align-middle">{props.travel.arrivalAddress}</td>
         <td className="align-middle">{props.travel.distance}</td>
-        <td className="align-middle">{props.travel.conveyance}</td>
-        <td className="align-middle">{props.travel.listOfPersonsSelected.length}</td>
-        <td className="align-middle">{props.travel.typeOfTrip}</td>
+        <td className="align-middle">{props.travel.conveyance.name}</td>
+        <td className="align-middle">
+          {props.travel.listOfPersonsSelected.length}
+        </td>
+        {
+          props.travel.typeOfTrip ? <td className="align-middle">SI</td> : <td className="align-middle">NO</td>}
+        {/* <td className="align-middle">{(props.travel.typeOfTrip)}</td> */}
+        {/* <td className="align-middle">{()=> {
+          if(props.travel.typeOfTrip) {
+            return 'SI';
+          } else return 'NO';
+        }}</td> */}
         <td className="align-middle">{props.travel.kgCO2PerPerson}</td>
       </tr>
     </Fragment>

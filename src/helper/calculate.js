@@ -6,5 +6,5 @@
  * t --> tramos (1: ida, 2: ida y vuelta) 
  **/
 export function CO2FootPrint(y, d, t) {
-  return (y*d*t);
+  return (y*d*t).toFixed(2);
 }
