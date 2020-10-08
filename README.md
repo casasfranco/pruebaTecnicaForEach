@@ -3,6 +3,15 @@
  <br>
 👨🏽‍💻 Casas, Franco Agustín.
 
+## ❗ IMPORTANTE ❗
+### Se deben cargar los datos manualmente para poder utilizar la prueba tecnica.
+ - Cargar personas (consultar modelo de la DB)
+ - Cargar medios de transporte
+ <br>
+ `Consultar` [https://github.com/casasfranco/pruebaTecnicaForEach](https://github.com/casasfranco/pruebaTecnicaForEach)
+<br>
+
+
 # Introducción
 El principal problema de la emergencia climática a la que nos enfrentamos hoy, es generada por el aumento de temperatura del planeta que desencadena catástrofes como alza en las mareas, sequías, inundaciones y muchos efectos devastadores. Este aumento de temperatura se debe al efecto invernadero generado por la acumulación excesiva de CO2 en la atmósfera, que es generada en gran parte por distintas Industrias.
 Hoy las empresas cada día toman más conciencia en los efectos del medio ambiente, es por ello, que hacen medición de su huella de carbono, la huella de carbono mide el CO2 que genera cualquier tipo acción ya sea la producción manufacturera de ropa, la producción de carnes incluso el carbono que producen las personas, la huella de carbono se usa para medir el CO2 generado y principalmente para tratar de disminuir o mitigar el carbono generado.
