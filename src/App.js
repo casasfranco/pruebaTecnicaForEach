@@ -66,20 +66,14 @@ function App() {
       {/* Componentes que deben cargar en la parte superior */}
       <Header></Header>
       <Switch>
-        <Route exact path="/">
-          <Home></Home>
+        <Route exact path="/"
+        render={ () => (
+          <TravelsList
+            listOfTravels={listOfTravels}
+            setRechargeTravels={setRechargeTravels}
+          ></TravelsList>
+        )}>
         </Route>
-
-        <Route
-          exact
-          path="/travels"
-          render={ () => (
-            <TravelsList
-              listOfTravels={listOfTravels}
-              setRechargeTravels={setRechargeTravels}
-            ></TravelsList>
-          )}
-        ></Route>
 
         <Route
           exact
@@ -95,6 +89,9 @@ function App() {
       </Switch>
       {/* Componentes que deben cargar en la parte inferior */}
       <Footer></Footer>
+      {/* <Route exact path="*">
+          <Erorr404></Erorr404>
+        </Route> */}
     </Router>
   );
 }

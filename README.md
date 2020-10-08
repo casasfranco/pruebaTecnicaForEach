@@ -1,5 +1,20 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+- Creada por 🛠️:
+ <br>
+👨🏽‍💻 Casas, Franco Agustín.
+
+# Introducción
+El principal problema de la emergencia climática a la que nos enfrentamos hoy, es generada por el aumento de temperatura del planeta que desencadena catástrofes como alza en las mareas, sequías, inundaciones y muchos efectos devastadores. Este aumento de temperatura se debe al efecto invernadero generado por la acumulación excesiva de CO2 en la atmósfera, que es generada en gran parte por distintas Industrias.
+Hoy las empresas cada día toman más conciencia en los efectos del medio ambiente, es por ello, que hacen medición de su huella de carbono, la huella de carbono mide el CO2 que genera cualquier tipo acción ya sea la producción manufacturera de ropa, la producción de carnes incluso el carbono que producen las personas, la huella de carbono se usa para medir el CO2 generado y principalmente para tratar de disminuir o mitigar el carbono generado.
+
+## Objetivo
+Facilitar la contabilización de la huella de carbono producida en los traslados de una empresa.
+<br />
+<br />
+<br />
+
+This project
+ was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 ## Available Scripts
 
 In the project directory, you can run:
@@ -66,3 +81,6 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+
+

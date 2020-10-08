@@ -7,7 +7,7 @@ import Image from "react-bootstrap/Image";
 const Header = () => {
   return (
     <Navbar bg="light border-0" expand="lg" variant="light">
-      <Navbar.Brand href="#home" className="pl-3">
+      <Navbar.Brand href="/" className="pl-3">
         <Image
           src="https://www.foreach.cl/static/media/forEach-gif.157867e4.gif"
           className="logo"
@@ -17,11 +17,11 @@ const Header = () => {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
       <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="container justify-content-center">
-          <NavLink exact={true} to="/" className="nav-link">
+        <Nav className="container justify-content-end">
+          {/* <NavLink exact={true} to="/" className="nav-link">
             <h5 className="lead mx-5">Inicio</h5>
-          </NavLink>
-          <NavLink exact={true} to="/travels" className="nav-link">
+          </NavLink> */}
+          <NavLink exact={true} to="/" className="nav-link">
             <h5 className="lead mx-5">Viajes registrados</h5>
           </NavLink>
           <NavLink exact={true} to="/travels/new" className="nav-link">
